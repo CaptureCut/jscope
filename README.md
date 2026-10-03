@@ -340,3 +340,271 @@ CLIENT_ID
 Goal:
 
 Identify accidentally exposed 
+
+NEXT DEVELOPMENT STEPS
+
+Stage 1 - Download JavaScript Files
+
+Current:
+
+Target
+ ↓
+Download HTML
+ ↓
+Find Script URLs
+
+Next:
+
+Target
+ ↓
+Download HTML
+ ↓
+Find Script URLs
+ ↓
+Download JavaScript Files
+
+Goals:
+
+- Download every discovered JavaScript file
+- Store URL and content
+- Create reusable JSFile structure
+- Build foundation for future analysis
+
+Planned structure:
+
+type JSFile struct {
+    URL     string
+    Content string
+}
+
+Status:
+
+Priority: High
+Complexity: Easy
+
+--------------------------------------------------
+
+Stage 2 - URL Extraction
+
+Goal:
+
+Extract URLs from JavaScript code.
+
+Examples:
+
+https://api.site.com
+https://cdn.site.com
+wss://chat.site.com
+
+Implementation:
+
+internal/extractor/urls.go
+
+Function:
+
+ExtractURLs(content string) []string
+
+Status:
+
+Priority: High
+Complexity: Easy
+
+--------------------------------------------------
+
+Stage 3 - Endpoint Extraction
+
+Goal:
+
+Locate API endpoints referenced inside JavaScript.
+
+Examples:
+
+/api/user
+/api/login
+/api/admin
+/graphql
+
+Implementation:
+
+internal/extractor/endpoints.go
+
+Function:
+
+ExtractEndpoints(content string) []string
+
+Status:
+
+Priority: High
+Complexity: Medium
+
+--------------------------------------------------
+
+Stage 4 - Interesting Keyword Detection
+
+Goal:
+
+Locate potentially interesting functionality.
+
+Keywords:
+
+admin
+debug
+internal
+staging
+production
+test
+graphql
+token
+auth
+secret
+
+Implementation:
+
+internal/extractor/keywords.go
+
+Status:
+
+Priority: Medium
+Complexity: Easy
+
+--------------------------------------------------
+
+Stage 5 - Secret Detection
+
+Goal:
+
+Find sensitive information that may be exposed.
+
+Examples:
+
+API_KEY
+TOKEN
+JWT
+SECRET
+CLIENT_ID
+
+Implementation:
+
+internal/extractor/secrets.go
+
+Status:
+
+Priority: Medium
+Complexity: Medium
+
+--------------------------------------------------
+
+Stage 6 - Relative URL Resolution
+
+Current issue:
+
+Some sites use relative paths.
+
+Example:
+
+/assets/app.js
+
+Needs to become:
+
+https://target.com/assets/app.js
+
+Goal:
+
+Normalize all script URLs before downloading.
+
+Status:
+
+Priority: High
+Complexity: Medium
+
+--------------------------------------------------
+
+Stage 7 - Concurrent Downloads
+
+Goal:
+
+Download many JavaScript files faster.
+
+Technologies:
+
+goroutines
+channels
+worker pools
+
+Benefits:
+
+- Faster scans
+- Better performance
+- Scalable architecture
+
+Status:
+
+Priority: Medium
+Complexity: Medium
+
+--------------------------------------------------
+
+Stage 8 - JSON Output
+
+Goal:
+
+Export findings in machine-readable format.
+
+Example:
+
+{
+  "target": "github.com",
+  "scripts": [],
+  "urls": [],
+  "endpoints": []
+}
+
+Status:
+
+Priority: Medium
+Complexity: Easy
+
+--------------------------------------------------
+
+Long-Term Vision
+
+Transform jscope into a modular reconnaissance platform.
+
+Future commands:
+
+jscope crawl target.com
+jscope js target.com
+jscope urls target.com
+jscope endpoints target.com
+jscope secrets target.com
+
+Target Architecture:
+
+jscope
+├── crawl
+├── js
+├── urls
+├── endpoints
+├── secrets
+├── output
+└── tech
+
+--------------------------------------------------
+
+Current Best Next Step
+
+1. Download JavaScript files
+2. Store them in JSFile structures
+3. Extract URLs from JavaScript
+4. Commit and push
+
+Target release:
+
+v0.2.0
+
+Features:
+
+✓ Download HTML
+✓ Discover JavaScript assets
+✓ Download JavaScript files
+✓ Extract URLs
